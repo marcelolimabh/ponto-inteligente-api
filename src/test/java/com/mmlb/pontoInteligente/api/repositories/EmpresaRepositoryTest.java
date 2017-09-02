@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.mmlb.pontoInteligente.api;
+package com.mmlb.pontoInteligente.api.repositories;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,7 +24,7 @@ import com.mmlb.pontoInteligente.api.repositories.IEmpresaRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class EmpresaRepositoryImplTest {
+public class EmpresaRepositoryTest {
 	
 	@Autowired
 	private IEmpresaRepository empresaRepository;

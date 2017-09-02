@@ -85,7 +85,7 @@ public class Funcionario implements Serializable {
 	@OneToMany(mappedBy="funcionario", fetch=FetchType.LAZY, cascade= CascadeType.ALL)
 	private List<Lancamento>lancamentos;
 	
-	private Funcionario() {
+	public Funcionario() {
 		
 	}
 
