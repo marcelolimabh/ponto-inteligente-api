@@ -24,13 +24,6 @@ public class EmpresaServiceImpl implements IEmpresaService {
 
 	private IEmpresaRepository empresaRepository;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.mmlb.pontoInteligente.api.services.IEmpresaService#buscarPorCnpj(java.
-	 * lang.Long)
-	 */
 	@Override
 	public Optional<Empresa> buscarPorCnpj(String cnpj) {
 		log.info("Buscando empresa por CPNJ {}", cnpj);
@@ -38,13 +31,6 @@ public class EmpresaServiceImpl implements IEmpresaService {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.mmlb.pontoInteligente.api.services.IEmpresaService#persistir(com.mmlb.
-	 * pontoInteligente.api.entites.Empresa)
-	 */
 	@Override
 	public Empresa persistir(Empresa empresa) {
 		log.info("Persisitindo a empresa {}", empresa);
@@ -59,7 +45,8 @@ public class EmpresaServiceImpl implements IEmpresaService {
 	}
 
 	/**
-	 * @param empresaRepository the empresaRepository to set
+	 * @param empresaRepository
+	 *            the empresaRepository to set
 	 */
 	public void setEmpresaRepository(IEmpresaRepository empresaRepository) {
 		this.empresaRepository = empresaRepository;
