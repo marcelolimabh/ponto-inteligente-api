@@ -51,4 +51,18 @@ public class EmpresaServiceImpl implements IEmpresaService {
 		return this.empresaRepository.save(empresa);
 	}
 
+	/**
+	 * @return the empresaRepository
+	 */
+	public IEmpresaRepository getEmpresaRepository() {
+		return empresaRepository;
+	}
+
+	/**
+	 * @param empresaRepository the empresaRepository to set
+	 */
+	public void setEmpresaRepository(IEmpresaRepository empresaRepository) {
+		this.empresaRepository = empresaRepository;
+	}
+
 }
