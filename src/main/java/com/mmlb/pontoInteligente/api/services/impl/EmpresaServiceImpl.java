@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mmlb.pontoInteligente.api.entites.Empresa;
@@ -21,7 +22,8 @@ import com.mmlb.pontoInteligente.api.services.IEmpresaService;
 public class EmpresaServiceImpl implements IEmpresaService {
 
 	private static final Logger log = LoggerFactory.getLogger(EmpresaServiceImpl.class);
-
+	
+	@Autowired
 	private IEmpresaRepository empresaRepository;
 
 	@Override
