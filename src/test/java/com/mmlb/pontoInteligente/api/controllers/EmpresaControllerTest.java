@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,43 +35,42 @@ import com.mmlb.pontoInteligente.api.services.impl.EmpresaServiceImpl;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class EmpresaControllerTest {
-	
+
 	@Autowired
 	private MockMvc mvc;
-	
+
 	@MockBean
 	private EmpresaServiceImpl empresaService;
-	
+
 	private static final String BUSCAR_EMPRESA_CNPJ_URL = "/api/empresas/cnpj/";
-	
-	private static final Long ID  = Long.valueOf(1);
-	
+
+	private static final Long ID = Long.valueOf(1);
+
 	private static final String CNPJ = "51463645000100";
-	
+
 	private static final String RAZAO_SOCIAL = "Empresa XYZ";
-	
-	
+
 	@Test
-	public void testBuscarEmpresaCnpjInvalido() throws Exception{
+	@WithMockUser
+	public void testBuscarEmpresaCnpjInvalido() throws Exception {
 		BDDMockito.given(this.empresaService.buscarPorCnpj(Mockito.anyString())).willReturn(Optional.empty());
-		
+
 		mvc.perform(MockMvcRequestBuilders.get(BUSCAR_EMPRESA_CNPJ_URL + CNPJ).accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isBadRequest())
-		.andExpect(jsonPath("$.erros").value("Empresa não encontrada para o CNPJ: " + CNPJ));
-	}
-	
-	@Test
-	public void testBuscarEmpresaValida() throws Exception{
-		BDDMockito.given(this.empresaService.buscarPorCnpj(Mockito.anyString())).willReturn(Optional.of(obterDadosEmpresa()));
-		
-		mvc.perform(MockMvcRequestBuilders.get(BUSCAR_EMPRESA_CNPJ_URL + CNPJ).accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.data.id").value(ID))
-		.andExpect(jsonPath("$.data.cnpj").value(CNPJ))
-		.andExpect(jsonPath("$.data.razaoSocial").value(RAZAO_SOCIAL))
-		.andExpect(jsonPath("$.erros").isEmpty());
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.erros").value("Empresa não encontrada para o CNPJ: " + CNPJ));
 	}
 
+	@Test
+	@WithMockUser
+	public void testBuscarEmpresaValida() throws Exception {
+		BDDMockito.given(this.empresaService.buscarPorCnpj(Mockito.anyString()))
+				.willReturn(Optional.of(obterDadosEmpresa()));
+
+		mvc.perform(MockMvcRequestBuilders.get(BUSCAR_EMPRESA_CNPJ_URL + CNPJ).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(jsonPath("$.data.id").value(ID))
+				.andExpect(jsonPath("$.data.cnpj").value(CNPJ))
+				.andExpect(jsonPath("$.data.razaoSocial").value(RAZAO_SOCIAL)).andExpect(jsonPath("$.erros").isEmpty());
+	}
 
 	private Empresa obterDadosEmpresa() {
 		Empresa empresa = new Empresa();
@@ -79,9 +79,5 @@ public class EmpresaControllerTest {
 		empresa.setCnpj(CNPJ);
 		return empresa;
 	}
-	
-	
-	
-			
 
 }
